@@ -8,6 +8,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Collider</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display+SC&family=Poiret+One&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
   <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
@@ -17,10 +20,10 @@
   <header class="navbar-fixed">
     <nav>
       <div class="nav-wrapper">
-        <ul>
+        <ul class="right">
           {% if user.is_authenticated %}
             <li>
-              <a href="#">
+              <a href="#" class="nav-btn">
                 <form action="{% url 'logout' %}" method="POST">
                   {% csrf_token %}
                   <button type="submit" class="submit-link">Log Out</button>
@@ -28,7 +31,8 @@
               </a>
             </li>
           {% else %}
-            <li><a href="{% url 'login' %}">Log In</a></li>
+            <li><a href="{% url 'signup' %}" class="nav-btn">Sign Up</a></li>
+            <li><a href="{% url 'login' %}" class="nav-btn">Log In</a></li>
           {% endif %}
         </ul>
       </div>      
