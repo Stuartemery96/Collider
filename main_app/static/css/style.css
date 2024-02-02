@@ -12,18 +12,20 @@ main {
 
 nav,
 footer.page-footer {
+  font-family: 'Poiret One', sans-serif;
   padding-top: 0;
   text-align: right;
   background-color: transparent;
-  font-family: 'Poiret One', sans-serif;
+  color: #E9FF4F;
 }
 
 input {
-  color: E9FF4F;
+  color: #E9FF4F;
+  background-color: white;
 }
 
 textarea {
-  color: E9FF4F;
+  color: #E9FF4F;
 }
 
 .submit-link {
