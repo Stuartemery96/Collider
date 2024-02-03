@@ -17,7 +17,7 @@ class Rsvp(models.Model):
   attendee = models.ForeignKey(User, on_delete=models.CASCADE)
 
 
-class Collides(models.Model):
+class Collide(models.Model):
   host = models.ForeignKey(User, on_delete=models.CASCADE)
   location = models.CharField(max_length=100)
   time = models.TimeField('Event Time')
@@ -30,7 +30,7 @@ class Event(models.Model):
   date = models.DateField('Event Date')
   category = models.CharField(max_length= 100)
   details = models.TextField(max_length=750)
-  collides = models.ForeignKey(Collides, on_delete=models.CASCADE)
+  collides = models.ForeignKey(Collide, on_delete=models.CASCADE)
   
   def __str__(self):
     return f'{self.title}'
