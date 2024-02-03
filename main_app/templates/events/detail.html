@@ -23,5 +23,30 @@
     </div>
   </div>
 </div>
-
+<hr>
+<h1 class="center">Hosted Collides:</h1>
+{% if event.collides.count %}
+{% for collide in collides %}
+<div class="row">
+  <div class="col s8">
+    <div class="card">
+      <div class="card-content">
+        <div class="card-title">
+          <p>
+            {{ collide.host }}
+          </p>
+          <p>
+            {{ collide.host.rating }}
+          </p>
+          <a href="" style="text-decoration: underline;">COLLIDE DETAILS</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endfor %}
+{% else %}
+<h4 class="center">No Collides Yet</h4>
+{% endif %}
+<a href="" id="create-btn">Host Collide</a>
 {% endblock %}
