@@ -5,4 +5,23 @@
   {{ event.title }}
 </h1>
 
+<div class="row">
+  <div class="center col s8">
+    <div class="card">
+      <div class="card-content">
+        <p class="top left">
+          {{ event.date }}
+        </p>
+        <p class="top right">CATEGORY:
+          {{ event.category }}
+        </p><br><br>
+        <p>
+          {{ event.details }}
+        </p><br>
+        <a href="">LOCATION</a>
+      </div>
+    </div>
+  </div>
+</div>
+
 {% endblock %}
