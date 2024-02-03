@@ -13,8 +13,23 @@ RATES = (
 )
 
 # Create your models here.
-class Rsvp(models.Model):
-  attendee = models.ForeignKey(User, on_delete=models.CASCADE)
+class Event(models.Model):
+  creator = models.ForeignKey(User, on_delete=models.CASCADE)
+  title = models.CharField(max_length=100)
+  date = models.DateField('Event Date')
+  category = models.CharField(max_length= 100)
+  description = models.CharField(max_length=125, help_text='A short description of the event')
+  details = models.TextField(max_length=750)
+  
+  def save(self, *args, **kwargs):
+    self.title = self.title.upper()
+    super().save(*args, **kwargs)  
+  
+  def __str__(self):
+    return f'{self.title}'
+  
+  def get_absolute_url(self):
+    return reverse('events_detail', kwargs={'event_id': self.id})
 
 
 class Collide(models.Model):
@@ -22,21 +37,13 @@ class Collide(models.Model):
   location = models.CharField(max_length=100)
   time = models.TimeField('Event Time')
   details = models.TextField(max_length=400)
-  rsvps = models.ForeignKey(Rsvp, on_delete=models.CASCADE)
+  event = models.ForeignKey(Event, on_delete=models.CASCADE)
 
 
-class Event(models.Model):
-  title = models.CharField(max_length=100)
-  date = models.DateField('Event Date')
-  category = models.CharField(max_length= 100)
-  details = models.TextField(max_length=750)
-  collides = models.ForeignKey(Collide, on_delete=models.CASCADE)
-  
-  def __str__(self):
-    return f'{self.title}'
-  
-  def get_absolute_url(self):
-    return reverse('event_detail', kwargs={'event_id': self.id})
+class Rsvp(models.Model):
+  attendee = models.ForeignKey(User, on_delete=models.CASCADE)
+  collide = models.ForeignKey(Collide, on_delete=models.CASCADE)
+
 
 
 class Rating(models.Model):
