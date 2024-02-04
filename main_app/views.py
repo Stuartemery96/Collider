@@ -2,10 +2,11 @@ from django.forms.models import BaseModelForm
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic import ListView
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import Event, Collide, Rsvp
+from .models import Event, Collide, Rsvp, User
 from .forms import CustomSignupForm, RsvpForm
 
 # Create your views here.
@@ -63,6 +64,18 @@ def rsvp_create(request, collide_id):
     return redirect('collides_detail', collide_id=collide_id)
 
 
+@login_required
+def user_profile(request):
+    events = Event.objects.filter(creator=request.user)
+    collides = Collide.objects.filter(host=request.user)
+    rsvps = Rsvp.objects.filter(attendee=request.user)
+    return render(request, 'users/profile.html', { 
+        'events': events, 
+        'collides': collides,
+        'rsvps': rsvps 
+    })
+
+
 def signup(request):
     error_message = ''
     if request.method == 'POST':
@@ -76,3 +89,5 @@ def signup(request):
     form = CustomSignupForm()
     context = {'form': form, 'error_message': error_message}
     return render(request, 'registration/signup.html', context)
+
+
