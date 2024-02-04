@@ -40,7 +40,7 @@ class Collide(models.Model):
   event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name='collides')
   
   def get_absolute_url(self):
-    return reverse('events_detail', kwargs={'event_id': self.id})
+    return reverse('events_detail', kwargs={'event_id': self.event_id})
 
 
 class Rsvp(models.Model):
