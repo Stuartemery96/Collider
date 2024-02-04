@@ -4,7 +4,7 @@
 {% if collides.count %}
 {% for collide in collides %}
 <div class="row">
-  <div class="col s10">
+  <div class="col s6">
     <div class="card">
       <div class="card-content">
         <div class="card-title">
@@ -13,8 +13,8 @@
             {{ collide.host.last_name }}
           </p>
           <p>
-            Rating:
-            {{ collide.host.rating }}
+            Event:
+            {{ collide.event.title }}
           </p>
           <a href="{% url 'collides_detail' collide.id %}" style="text-decoration: underline;">COLLIDE DETAILS</a>
         </div>

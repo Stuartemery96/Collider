@@ -23,6 +23,7 @@ class Event(models.Model):
   
   def save(self, *args, **kwargs):
     self.title = self.title.upper()
+    self.category = self.category.upper()
     super().save(*args, **kwargs)  
   
   def __str__(self):
