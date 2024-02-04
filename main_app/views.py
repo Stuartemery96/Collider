@@ -5,8 +5,8 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import Event, Collide
-from .forms import CustomSignupForm
+from .models import Event, Collide, Rsvp
+from .forms import CustomSignupForm, RsvpForm
 
 # Create your views here.
 def home(request):
@@ -15,7 +15,7 @@ def home(request):
 
 @login_required
 def events_index(request):
-    events = Event.objects.filter(creator=request.user)
+    events = Event.objects.all()
     return render(request, 'events/index.html', { 'events': events })
 
 
@@ -50,7 +50,17 @@ class CollideCreate(LoginRequiredMixin, CreateView):
 @login_required
 def collides_detail(request, collide_id):
     collide = Collide.objects.get(id=collide_id)
-    return render(request, 'collides/detail.html', { 'collide': collide })
+    rsvp = Rsvp.objects.filter(collide=collide)
+    has_rsvpd = collide.rsvp_set.filter(attendee=request.user).exists()
+    return render(request, 'collides/detail.html', { 'collide': collide, 'rsvp': rsvp, 'has_rsvpd': has_rsvpd })
+
+
+@login_required
+def rsvp_create(request, collide_id):
+    form = RsvpForm(request.POST, collide_id=collide_id, request=request)
+    if form.is_valid():
+        form.save()
+    return redirect('collides_detail', collide_id=collide_id)
 
 
 def signup(request):
@@ -60,7 +70,7 @@ def signup(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect('home')
+            return redirect('events_index')
         else:
             error_message = 'Invalid Sign Up - Try Again'
     form = CustomSignupForm()

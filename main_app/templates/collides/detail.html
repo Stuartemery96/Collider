@@ -1,11 +1,62 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
-</body>
-</html>
+{% extends 'base.html' %}
+{% block content %}
+
+<h1 class="center">Collide Details</h1>
+
+<div class="row">
+  <div class="col s8">
+    <div class="card">
+      <div class="card-content">
+        <div class="card-title">
+          <p>
+            {{ collide.host.first_name }}
+            {{ collide.host.last_name }}
+          </p>
+          <p>
+            Rating:
+            {{ collide.host.rating }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr><br>
+{% if has_rsvpd %}
+<p class="right" style="background-color: grey;">You have RSVP'd</p>
+{% else %}
+<div class="right">
+  <form action="{% url 'add_rsvp' collide.id %}" method="POST">
+    {% csrf_token %}
+    {{ rsvp_form.as_p }}
+    <input type="submit" value="RSVP" class="btn">
+  </form>
+</div>
+{% endif %}
+{% if rsvp.count %}
+{% for rsvp in collide.rsvp_set.all %}
+<div class="row">
+  <div class="col s8">
+    <div class="card">
+      <div class="card-content">
+        <div class="card-title">
+          <p>
+            {{ rsvp.attendee.first_name }}
+            {{ rsvp.attendee.last_name }}
+          </p>
+          <p>
+            Rating:
+            {{ rsvp.attendee.rating }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endfor %}
+{% else %}
+<h4 class="center">No Attendees Yet</h4>
+{% endif %}
+
+{% endblock %}
