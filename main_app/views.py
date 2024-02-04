@@ -65,11 +65,23 @@ def rsvp_create(request, collide_id):
 
 
 @login_required
-def user_profile(request):
+def user_events(request):
     events = Event.objects.filter(creator=request.user)
     collides = Collide.objects.filter(host=request.user)
     rsvps = Rsvp.objects.filter(attendee=request.user)
-    return render(request, 'users/profile.html', { 
+    return render(request, 'profile/events.html', { 
+        'events': events, 
+        'collides': collides,
+        'rsvps': rsvps 
+    })
+
+
+@login_required
+def user_collides(request):
+    events = Event.objects.filter(creator=request.user)
+    collides = Collide.objects.filter(host=request.user)
+    rsvps = Rsvp.objects.filter(attendee=request.user)
+    return render(request, 'profile/collides.html', { 
         'events': events, 
         'collides': collides,
         'rsvps': rsvps 
@@ -89,5 +101,6 @@ def signup(request):
     form = CustomSignupForm()
     context = {'form': form, 'error_message': error_message}
     return render(request, 'registration/signup.html', context)
+
 
 

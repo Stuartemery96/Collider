@@ -26,6 +26,7 @@ footer.page-footer {
   text-align: right;
   background-color: transparent;
   color: #E9FF4F;
+  border-radius: 5px;
 }
 
 input {

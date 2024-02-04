@@ -1,0 +1,33 @@
+{% extends 'profile_base.html' %}
+{% block content %}
+
+<br>
+<h1 class="center">MY UPCOMING EVENTS</h1>
+
+{% for event in events %}
+<div class="row">
+  <div class="center col s7">
+    <a href="{% url 'events_detail' event.id %}" id="evt-link">
+      <div class="card">
+        <div class="card-content">
+          <p class="top left">
+            {{ event.date }}
+          </p>
+          <p class="top right">CATEGORY:
+            {{ event.category }}
+          </p><br><br>
+          <span class="card-title">
+            {{ event.title }}
+          </span>
+          <p>
+            {{ event.description }}
+          </p>
+        </div>
+      </div>
+    </a>
+  </div>
+</div>
+{% endfor %}
+
+
+{% endblock %}
