@@ -47,6 +47,12 @@ class CollideCreate(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
+@login_required
+def collides_detail(request, collide_id):
+    collide = Collide.objects.get(id=collide_id)
+    return render(request, 'collides/detail.html', { 'collide': collide })
+
+
 def signup(request):
     error_message = ''
     if request.method == 'POST':
