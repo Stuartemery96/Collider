@@ -1,0 +1,30 @@
+{% extends 'profile_base.html' %}
+{% block content %}
+<br><br>
+{% if collides.count %}
+{% for collide in collides %}
+<div class="row">
+  <div class="col s10">
+    <div class="card">
+      <div class="card-content">
+        <div class="card-title">
+          <p>
+            {{ collide.host.first_name }}
+            {{ collide.host.last_name }}
+          </p>
+          <p>
+            Rating:
+            {{ collide.host.rating }}
+          </p>
+          <a href="{% url 'collides_detail' collide.id %}" style="text-decoration: underline;">COLLIDE DETAILS</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endfor %}
+{% else %}
+<h4 class="center">No Collides Yet</h4>
+{% endif %}
+
+{% endblock %}

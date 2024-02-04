@@ -9,6 +9,7 @@ urlpatterns = [
     path('events/<int:event_id>/collide_create/', views.CollideCreate.as_view(), name='collide_create'),
     path('collides/<int:collide_id>/', views.collides_detail, name='collides_detail'),
     path('collides/<int:collide_id>/add_rsvp/', views.rsvp_create, name='add_rsvp'),
-    path('users/', views.user_profile, name='user_profile'),
+    path('profile/events/', views.user_events, name='user_events'),
+    path('profile/collides/', views.user_collides, name='user_collides'),
     path('accounts/signup/', views.signup, name='signup'),
 ]
