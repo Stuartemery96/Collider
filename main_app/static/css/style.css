@@ -11,6 +11,10 @@ main {
   flex: 1 0 auto;
 }
 
+nav a {
+  margin-right: 2rem;
+}
+
 nav,
 footer.page-footer {
   font-family: 'Poiret One', sans-serif;
@@ -69,3 +73,13 @@ button.submit-link:focus {
   color: #F0FD95;
 }
 
+#create-btn {
+  display: inline-block;
+  width: 12vmax;
+  height: 3vmax;
+  background: #B9BEB3;
+  text-align: center;
+  border-radius: 5px;
+  color: #F0FD95;
+  font-size: 1.75vmax;
+}

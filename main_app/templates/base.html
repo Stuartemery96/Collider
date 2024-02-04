@@ -28,6 +28,7 @@
         </ul>
         <ul class="right">
           {% if user.is_authenticated %}
+          <li><a href="{% url 'events_index' %}" class="nav-btn">Events</a></li>
           <li><a href="{% url 'events_create' %}" class="nav-btn">Create Event</a></li>
           <li>
             <a href="#" class="nav-btn">
