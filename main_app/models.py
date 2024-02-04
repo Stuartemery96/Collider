@@ -37,7 +37,10 @@ class Collide(models.Model):
   location = models.CharField(max_length=100)
   time = models.TimeField('Event Time')
   details = models.TextField(max_length=400)
-  event = models.ForeignKey(Event, on_delete=models.CASCADE)
+  event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name='collides')
+  
+  def get_absolute_url(self):
+    return reverse('events_detail', kwargs={'event_id': self.id})
 
 
 class Rsvp(models.Model):
