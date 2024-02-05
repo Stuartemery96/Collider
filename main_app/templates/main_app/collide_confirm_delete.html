@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>DELETE COLLIDE</h1>
+<form action="" method="POST">
+    {% csrf_token %}
+    <input type="submit" value="Yes - Delete" class="btn" style="background-color: #daad86;">&nbsp;&nbsp;
+    <a href="{% url 'collides_detail' collide.id %}" class="btn" style="background-color: #daad86;">Cancel</a>
+</form>
+
+{% endblock %}
