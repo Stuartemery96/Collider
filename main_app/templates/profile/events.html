@@ -21,7 +21,10 @@
           </span>
           <p>
             {{ event.description }}
-          </p>
+          </p><br>
+          <a href="{% url 'events_update' event.id %}" class="edit-link">
+            <p>EDIT</p>
+          </a>
         </div>
       </div>
     </a>

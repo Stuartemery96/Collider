@@ -25,13 +25,13 @@
 
 <hr><br>
 {% if has_rsvpd %}
-<p class="right" style="background-color: grey;">You have RSVP'd</p>
+<p class="right">You have RSVP'd</p>
 {% else %}
 <div class="right">
   <form action="{% url 'add_rsvp' collide.id %}" method="POST">
     {% csrf_token %}
     {{ rsvp_form.as_p }}
-    <input type="submit" value="RSVP" class="btn">
+    <input type="submit" value="RSVP" class="btn" style="background-color: #daad86">
   </form>
 </div>
 {% endif %}
