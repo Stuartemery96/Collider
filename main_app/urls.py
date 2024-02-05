@@ -11,5 +11,6 @@ urlpatterns = [
     path('collides/<int:collide_id>/add_rsvp/', views.rsvp_create, name='add_rsvp'),
     path('profile/events/', views.user_events, name='user_events'),
     path('profile/collides/', views.user_collides, name='user_collides'),
+    path('profile/rsvps/', views.user_rsvps, name='user_rsvps'),
     path('accounts/signup/', views.signup, name='signup'),
 ]

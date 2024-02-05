@@ -88,6 +88,12 @@ def user_collides(request):
     })
 
 
+@login_required
+def user_rsvps(request):
+    rsvps = Rsvp.objects.filter(attendee=request.user)
+    return render(request, 'profile/rsvps.html', { 'rsvps': rsvps })
+
+
 def signup(request):
     error_message = ''
     if request.method == 'POST':

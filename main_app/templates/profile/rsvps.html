@@ -1,0 +1,34 @@
+{% extends 'profile_base.html' %}
+{% block content %}
+
+{% if rsvps.count %}
+{% for rsvp in rsvps %}
+<div class="row">
+  <div class="col s8">
+    <div class="card">
+      <div class="card-content">
+        <div class="card-title">
+          <p>
+            Event:
+            {{ rsvp.collide.event.title }}
+          </p>
+          <p>Collide Host:
+            {{ rsvp.collide.host.first_name }}
+            {{ rsvp.collide.host.last_name }}
+          </p>
+          <p>
+            Host Rating:
+            {{ rsvp.attendee.rating }}
+          </p>
+          <a href="{% url 'collides_detail' rsvp.collide.id %}" style="text-decoration: underline;">COLLIDE DETAILS</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endfor %}
+{% else %}
+<h4 class="center">You haven't RSVP'd to any events</h4>
+{% endif %}
+
+{% endblock %}
