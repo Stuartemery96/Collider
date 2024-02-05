@@ -1,5 +1,6 @@
+from typing import Any
 from django.forms.models import BaseModelForm
-from django.http import HttpResponse
+from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView
@@ -30,10 +31,23 @@ def events_detail(request, event_id):
 class EventCreate(LoginRequiredMixin, CreateView):
     model = Event
     fields = ['title', 'date', 'category', 'description', 'details']
+    success_url = '/events'
     
     def form_valid(self, form):
         form.instance.creator = self.request.user
         return super().form_valid(form)
+    
+    
+class EventUpdate(LoginRequiredMixin, UpdateView):
+    model = Event
+    fields = ['title', 'date', 'category', 'description', 'details']
+    success_url = '/profile/events'
+    
+    def dispatch(self, request, *args, **kwargs):
+        event = self.get_object()
+        if event.creator != request.user:
+            return redirect('events_index')
+        return super().dispatch(request, *args, **kwargs)
     
     
 class CollideCreate(LoginRequiredMixin, CreateView):
@@ -46,6 +60,18 @@ class CollideCreate(LoginRequiredMixin, CreateView):
         event = get_object_or_404(Event, pk=event_id)
         form.instance.event = event
         return super().form_valid(form)
+    
+    
+class CollideUpdate(LoginRequiredMixin, UpdateView):
+    model = Collide
+    fields = ['location', 'time', 'details']
+    success_url = '/profile/collides'
+
+    def dispatch(self, request, *args, **kwargs):
+        collide = self.get_object()
+        if collide.host != request.user:
+            return redirect('/profile/collides')
+        return super().dispatch(request, *args, **kwargs)
 
 
 @login_required

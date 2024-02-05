@@ -2,8 +2,8 @@ body {
   display: flex;
   min-height: 100vh;
   flex-direction: column;
-  background-color: #2C2B21;
-  color: #E9FF4F;
+  background-color: #659dbd;
+  color: #fbeec1;
   font-family: 'Playfair Display', serif;
 }
 
@@ -24,18 +24,18 @@ footer.page-footer {
   font-family: 'Poiret One', sans-serif;
   padding-top: 0;
   text-align: right;
-  background-color: transparent;
-  color: #E9FF4F;
+  background-color: #bc986A;
+  color: #fbeec1;
   border-radius: 5px;
 }
 
 input {
-  color: #E9FF4F;
+  color: #fbeec1;
   background-color: white;
 }
 
 textarea {
-  color: #E9FF4F;
+  color: #fbeec1;
 }
 
 .submit-link {
@@ -54,28 +54,39 @@ button.submit-link:focus {
   display: inline-block;
   width: 115px;
   height: 25px;
-  background: #B9BEB3;
+  background: #659dbd;
   text-align: center;
   border-radius: 5px;
-  color: #F0FD95;
+  color: #fbeec1;
   font-weight: bold;
   line-height: 25px;
 }
 
 .nav-btn button {
   font-family: 'Poiret One', sans-serif;
-  color: #F0FD95;
+  color: #fbeec1;
+}
+
+.evt-link {
+  text-decoration: underline;
+  color: #fbeec1;
+}
+
+.edit-link {
+  color: white;
+  text-decoration: underline;
+  font-size: 1.15vmax;
 }
 
 .card {
   background-color: transparent;
-  border-color: #F0FD95;
+  border-color: #fbeec1;
   border-width: thin;
   border-style: solid;
 }
 
 #evt-link {
-  color: #F0FD95;
+  color: #fbeec1;
 }
 
 #create-btn {
@@ -85,6 +96,7 @@ button.submit-link:focus {
   background: #B9BEB3;
   text-align: center;
   border-radius: 5px;
-  color: #F0FD95;
+  color: #fbeec1;
   font-size: 1.75vmax;
 }
+

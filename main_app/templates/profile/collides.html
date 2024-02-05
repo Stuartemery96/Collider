@@ -14,9 +14,13 @@
           </p>
           <p>
             Event:
-            {{ collide.event.title }}
+            <a href="{% url 'events_detail' collide.event.id %}" class="evt-link">
+              {{ collide.event.title }}</a>
           </p>
-          <a href="{% url 'collides_detail' collide.id %}" style="text-decoration: underline;">COLLIDE DETAILS</a>
+          <a href="{% url 'collides_detail' collide.id %}" class="evt-link">COLLIDE DETAILS</a>
+          <a href="{% url 'collides_update' collide.id %}" class="edit-link">
+            <p>EDIT</p>
+          </a>
         </div>
       </div>
     </div>
@@ -24,7 +28,7 @@
 </div>
 {% endfor %}
 {% else %}
-<h4 class="center">No Collides Yet</h4>
+<h4 class=" center">No Collides Yet</h4>
 {% endif %}
 
 {% endblock %}

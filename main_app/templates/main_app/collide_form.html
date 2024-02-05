@@ -2,14 +2,18 @@
 
 {% block content %}
 
+{% if object %}
+<h1 class="center">Edit Collide</h1>
+{% else %}
 <h1 class="center">Create Collide</h1>
+{% endif %}
 
 <form action="" method="POST">
   {% csrf_token %}
   <table>
     {{ form.as_table }}
-  </table>
-  <input type="submit" value="Create!" class="btn">
+  </table><br>
+  <input type="submit" value="Submit!" class="btn" style="background-color: #daad86;">
 </form>
 
 {% endblock %}
