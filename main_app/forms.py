@@ -44,13 +44,3 @@ class RatingForm(ModelForm):
   class Meta: 
     model = Rating
     fields = ['rating']
-
-  #  def __init__(self, *args, host_id=None, attendee_id=None, **kwargs):
-  #     self.host_id = host_id
-  #     self.attendee_id = attendee_id
-  #     super().__init__(*args, **kwargs)
-
-  #  def save(self, commit=True):
-  #     rating = super().save(commit=False)
-  #     rating.attendee = Rsvp.objects.get(pk=self.rsvp.attendee_id)
-  #     rating.host = Collide.objects.get(pk=self.collide.host_id)
