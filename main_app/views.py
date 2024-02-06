@@ -4,7 +4,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import Event, Collide, Rsvp, User, RATES
+from .models import Event, Collide, Rsvp, User, RATES, Rating
 from .forms import CustomSignupForm, RsvpForm, RatingForm
 
 # Create your views here.
@@ -89,20 +89,21 @@ class CollideDelete(LoginRequiredMixin, DeleteView):
 def collides_detail(request, collide_id):
     collide = Collide.objects.get(id=collide_id)
     host_rating = collide.host.rating_set.aggregate(Avg('rating', default=0))['rating__avg']
-    print('host rating is', host_rating)
     rsvps = Rsvp.objects.filter(collide=collide)
     attendees = []
     for rsvp in rsvps:
         avg_rating = rsvp.attendee.rating_set.aggregate(Avg('rating', default=0))
+        has_rated_attendee = rsvp.attendee.rating_set.filter(rating_user=request.user).exists()
         attendees.append({
             'rsvp': rsvp,
             'attendee': rsvp.attendee,
-            'avg_rating': avg_rating
+            'avg_rating': avg_rating,
+            'has_rated': has_rated_attendee
         })
     has_rsvpd = collide.rsvp_set.filter(attendee=request.user).exists()
     rating_form = RatingForm()
-    # rsvps = Rsvp.annotate(Avg('attendee__rating', default=0))
-    return render(request, 'collides/detail.html', { 'collide': collide, 'rsvps': rsvps, 'has_rsvpd': has_rsvpd, 'rating_form': rating_form, 'attendees': attendees, 'host_rating': host_rating })
+    has_rated_host = collide.host.rating_set.filter(rating_user=request.user).exists()
+    return render(request, 'collides/detail.html', { 'collide': collide, 'rsvps': rsvps, 'has_rsvpd': has_rsvpd, 'rating_form': rating_form, 'attendees': attendees, 'host_rating': host_rating,  'has_rated_host': has_rated_host})
 
 
 @login_required
@@ -118,6 +119,7 @@ def add_rating(request, collide_id, user_id):
     form = RatingForm(request.POST)
     if form.is_valid():
         new_rating = form.save(commit=False)
+        new_rating.rating_user_id = request.user.id
         new_rating.rated_user_id = user_id
         new_rating.save()
     return redirect('collides_detail', collide_id=collide_id)

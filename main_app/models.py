@@ -52,6 +52,7 @@ class Rsvp(models.Model):
 
 class Rating(models.Model):
   rated_user = models.ForeignKey(User, on_delete=models.CASCADE)
+  rating_user = models.ForeignKey(User,related_name='rating_user', on_delete=models.CASCADE)
   rating = models.IntegerField(
     choices=RATES,
     default=RATES[4][0])
