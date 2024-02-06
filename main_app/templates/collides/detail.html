@@ -14,9 +14,13 @@
             {{ collide.host.last_name }}
           </p>
           <p>
-            Rating:
-            {{ collide.host.rating }}
+            Rating: <span class="rating-stars" id="host-{{ collide.host.id }}">⭐️⭐️⭐️⭐️⭐️</span>
           </p>
+          <form action="{% url 'add_rating' collide.id collide.host.id %}" method="POST">
+            {% csrf_token %}
+            {{ rating_form.as_p }}
+            <input type="submit" value="RATE" class="btn">
+          </form>
         </div>
       </div>
     </div>
@@ -36,36 +40,43 @@
 </div>
 {% endif %}
 {% if rsvps.count %}
-  {% for a in attendees %}
-  <div class="row">
-    <div class="col s8">
-      <div class="card">
-        <div class="card-content">
-          <div class="card-title">
-            <p>
-              {{ a.attendee.first_name }}
-              {{ a.attendee.last_name }}
-            </p>
-            <p>
-              Rating:
-              {{ a.avg_rating.rating__avg }}
-            </p>
-            <form action="{% url 'add_rating' collide.id a.attendee.id %}" method="POST">
-              {% csrf_token %}
-              {{ rating_form.as_p }}
-              <input type="submit" value="RATE" class="btn">
-            </form>
-          </div>
+{% for a in attendees %}
+<div class="row">
+  <div class="col s8">
+    <div class="card">
+      <div class="card-content">
+        <div class="card-title">
+          <p>
+            {{ a.attendee.first_name }}
+            {{ a.attendee.last_name }}
+          </p>
+          <p>
+            Rating: <span class="rating-stars" id="attendee-{{ a.attendee.id }}">⭐️⭐️⭐️⭐️⭐️</span>
+          </p>
+          <form action="{% url 'add_rating' collide.id a.attendee.id %}" method="POST">
+            {% csrf_token %}
+            {{ rating_form.as_p }}
+            <input type="submit" value="RATE" class="btn">
+          </form>
         </div>
       </div>
     </div>
   </div>
-  {% endfor %}
+</div>
+{% endfor %}
 {% else %}
 <h4 class="center">No Attendees Yet</h4>
 {% endif %}
 <script>
   const selectEls = document.querySelectorAll('select');
   M.FormSelect.init(selectEls);
+
+  let hostRatingEl = document.getElementById('host-{{collide.host.id}}');
+  hostRatingEl.style.width = `${24 * {{ host_rating }}}` + 'px';
+  let ratingEl;
+  {% for a in attendees %}
+  ratingEl = document.getElementById('attendee-{{a.attendee.id}}');
+  ratingEl.style.width = `${24 * {{ a.avg_rating.rating__avg }}}` + 'px';
+  {% endfor %}
 </script>
 {% endblock %}

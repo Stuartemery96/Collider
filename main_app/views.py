@@ -4,7 +4,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import Event, Collide, Rsvp, User
+from .models import Event, Collide, Rsvp, User, RATES
 from .forms import CustomSignupForm, RsvpForm, RatingForm
 
 # Create your views here.
@@ -22,7 +22,9 @@ def events_index(request):
 def events_detail(request, event_id):
     event = Event.objects.get(id=event_id)
     collides = Collide.objects.filter(event=event)
-    return render(request, 'events/detail.html', { 'event': event, 'collides': collides })
+    for collide in collides:
+        host_rating = collide.host.rating_set.aggregate(Avg('rating', default=0))['rating__avg']
+    return render(request, 'events/detail.html', { 'event': event, 'collides': collides, 'host_rating': host_rating })
 
 
 class EventCreate(LoginRequiredMixin, CreateView):
@@ -79,6 +81,7 @@ class CollideDelete(LoginRequiredMixin, DeleteView):
 @login_required
 def collides_detail(request, collide_id):
     collide = Collide.objects.get(id=collide_id)
+    host_rating = collide.host.rating_set.aggregate(Avg('rating', default=0))['rating__avg']
     rsvps = Rsvp.objects.filter(collide=collide)
     attendees = []
     for rsvp in rsvps:
@@ -91,7 +94,7 @@ def collides_detail(request, collide_id):
     has_rsvpd = collide.rsvp_set.filter(attendee=request.user).exists()
     rating_form = RatingForm()
     # rsvps = Rsvp.annotate(Avg('attendee__rating', default=0))
-    return render(request, 'collides/detail.html', { 'collide': collide, 'rsvps': rsvps, 'has_rsvpd': has_rsvpd, 'rating_form': rating_form, 'attendees': attendees })
+    return render(request, 'collides/detail.html', { 'collide': collide, 'rsvps': rsvps, 'has_rsvpd': has_rsvpd, 'rating_form': rating_form, 'attendees': attendees, 'host_rating': host_rating })
 
 
 @login_required

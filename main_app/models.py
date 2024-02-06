@@ -24,7 +24,7 @@ class Event(models.Model):
   def save(self, *args, **kwargs):
     self.title = self.title.upper()
     self.category = self.category.upper()
-    super().save(*args, **kwargs)  
+    super().save(*args, **kwargs)
   
   def __str__(self):
     return f'{self.title}'
@@ -39,7 +39,7 @@ class Collide(models.Model):
   time = models.TimeField('Event Time')
   details = models.TextField(max_length=400)
   event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name='collides')
-  
+
   def get_absolute_url(self):
     return reverse('events_detail', kwargs={'event_id': self.event_id})
 
@@ -55,6 +55,3 @@ class Rating(models.Model):
   rating = models.IntegerField(
     choices=RATES,
     default=RATES[4][0])
-  
-  def get_rating_display(self):
-    return dict(RATES)[self.rating]
