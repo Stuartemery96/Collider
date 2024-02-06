@@ -22,9 +22,16 @@ def events_index(request):
 def events_detail(request, event_id):
     event = Event.objects.get(id=event_id)
     collides = Collide.objects.filter(event=event)
+    hosts = []
     for collide in collides:
         host_rating = collide.host.rating_set.aggregate(Avg('rating', default=0))['rating__avg']
-    return render(request, 'events/detail.html', { 'event': event, 'collides': collides, 'host_rating': host_rating })
+        hosts.append({
+            'collide': collide,
+            'host': collide.host,
+            'host_rating': host_rating
+        })
+    print(hosts)
+    return render(request, 'events/detail.html', { 'event': event, 'collides': collides, 'hosts': hosts })
 
 
 class EventCreate(LoginRequiredMixin, CreateView):
@@ -82,6 +89,7 @@ class CollideDelete(LoginRequiredMixin, DeleteView):
 def collides_detail(request, collide_id):
     collide = Collide.objects.get(id=collide_id)
     host_rating = collide.host.rating_set.aggregate(Avg('rating', default=0))['rating__avg']
+    print('host rating is', host_rating)
     rsvps = Rsvp.objects.filter(collide=collide)
     attendees = []
     for rsvp in rsvps:

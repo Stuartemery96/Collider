@@ -26,25 +26,25 @@
 <hr>
 <h1 class="center">Hosted Collides:</h1>
 {% if event.collides.count %}
-{% for collide in event.collides.all %}
+{% for host in hosts %}
 <div class="row">
   <div class="col s8">
     <div class="card">
       <div class="card-content">
         <div class="card-title">
           <p>
-            {{ collide.host.first_name }}
-            {{ collide.host.last_name }}
+            {{ host.host.first_name }}
+            {{ host.host.last_name }}
           </p>
           <p>
             Rating:
-            {% if host_rating.count %}
-            <span class="rating-stars" id="host-{{ collide.host.id }}">⭐️⭐️⭐️⭐️⭐️</span>
+            {% if host.host_rating %}
+            <span class="rating-stars" id="host-{{ host.host.id }}">⭐️⭐️⭐️⭐️⭐️</span>
             {% else %}
             <span style="color: orange;">No Reviews</span>
             {% endif %}
           </p>
-          <a href="{% url 'collides_detail' collide.id %}" class="evt-link">COLLIDE DETAILS</a>
+          <a href="{% url 'collides_detail' host.collide.id %}" class="evt-link">COLLIDE DETAILS</a>
         </div>
       </div>
     </div>
@@ -57,8 +57,10 @@
 <a href="{% url 'collide_create' event.id %}" id="create-btn">Host Collide</a>
 
 <script>
-  let hostRatingEl = document.getElementById('host-{{collide.host.id}}');
-  hostRatingEl.style.width = `${24 * {{ host_rating }}}` + 'px';
+  {% for host in hosts %}
+  hostRatingEl = document.getElementById('host-{{host.host.id}}');
+  hostRatingEl.style.width = `${24 * {{ host.host_rating }}}` + 'px';
+  {% endfor %}
 </script>
 
 {% endblock %}
