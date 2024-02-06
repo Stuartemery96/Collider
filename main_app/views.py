@@ -79,14 +79,19 @@ class CollideDelete(LoginRequiredMixin, DeleteView):
 @login_required
 def collides_detail(request, collide_id):
     collide = Collide.objects.get(id=collide_id)
-    # filter = Q(collide=collide)
     rsvps = Rsvp.objects.filter(collide=collide)
+    attendees = []
     for rsvp in rsvps:
-        rsvp.attendee.rating_set.annotate(Avg('rating', default=99))
+        avg_rating = rsvp.attendee.rating_set.aggregate(Avg('rating', default=0))
+        attendees.append({
+            'rsvp': rsvp,
+            'attendee': rsvp.attendee,
+            'avg_rating': avg_rating
+        })
     has_rsvpd = collide.rsvp_set.filter(attendee=request.user).exists()
     rating_form = RatingForm()
     # rsvps = Rsvp.annotate(Avg('attendee__rating', default=0))
-    return render(request, 'collides/detail.html', { 'collide': collide, 'rsvps': rsvps, 'has_rsvpd': has_rsvpd, 'rating_form': rating_form })
+    return render(request, 'collides/detail.html', { 'collide': collide, 'rsvps': rsvps, 'has_rsvpd': has_rsvpd, 'rating_form': rating_form, 'attendees': attendees })
 
 
 @login_required
@@ -100,9 +105,10 @@ def rsvp_create(request, collide_id):
 @login_required
 def add_rating(request, collide_id, user_id):
     form = RatingForm(request.POST)
-    form.user_rated = user_id
     if form.is_valid():
-        form.save()
+        new_rating = form.save(commit=False)
+        new_rating.rated_user_id = user_id
+        new_rating.save()
     return redirect('collides_detail', collide_id=collide_id)
 
 
