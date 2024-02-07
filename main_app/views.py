@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Event, Collide, Rsvp, User, RATES, Rating
 from .forms import CustomSignupForm, RsvpForm, RatingForm
+from datetime import date
 
 # Create your views here.
 def home(request):
@@ -20,9 +21,11 @@ def events_index(request):
         events = Event.objects.filter(category=filter)
     else:
         events = Event.objects.all()
+    date_filter = Event.objects.filter(date=date.today())
+    today = date.today()
     distinct_cat = Event.objects.order_by('category').distinct('category').values_list(Upper('category'))
     print(distinct_cat)
-    return render(request, 'events/index.html', { 'events': events, 'distinct_cat': distinct_cat, 'filter': filter })
+    return render(request, 'events/index.html', { 'events': events, 'distinct_cat': distinct_cat, 'filter': filter, 'date_filter': date_filter })
 
 
 @login_required

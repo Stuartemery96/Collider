@@ -104,3 +104,11 @@ button.submit-link:focus {
   display: inline-block;
   overflow: hidden;
 }
+
+a.active {
+  border: 2px solid salmon;
+}
+
+table > tbody > tr > th > label {
+  color: #fbeec1;
+}
