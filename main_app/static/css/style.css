@@ -134,3 +134,10 @@ table > tbody > tr > th > label {
   background-color: #bc986A;
   color: white;
 }
+
+#searchbar {
+  font-size: 12px;
+  padding: 2px;
+  border-radius: 5px;
+  background-color: white;
+}
