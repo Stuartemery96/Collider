@@ -3,6 +3,7 @@
 
 <h1 class="center">EVENTS</h1>
 
+
 <div>
   <div class="left">
     <a href="{% url 'events_index' %}" class="{% if filter_category == None %}active{% else %}inactive{% endif %}" id="filters">ALL</a>
@@ -22,7 +23,10 @@
     {% else %}inactive{% endif %}" id="filters">UPCOMING EVENTS</a>
   </div>
 </div>
-
+<br>
+<br>
+<hr>
+<br>
 {% for event in events %}
 <div class="row">
   <div class="center col s7">
