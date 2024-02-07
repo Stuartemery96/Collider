@@ -22,6 +22,7 @@ class Event(models.Model):
   category = models.CharField(max_length= 100)
   description = models.CharField(max_length=125, help_text='A short description of the event')
   details = models.TextField(max_length=750)
+  photo = models.CharField(max_length=250, null=True, blank=True)
   
   def save(self, *args, **kwargs):
     self.title = self.title.upper()
@@ -65,3 +66,5 @@ class Rating(models.Model):
   rating = models.IntegerField(
     choices=RATES,
     default=RATES[4][0])
+  
+  

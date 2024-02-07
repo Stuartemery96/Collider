@@ -1,3 +1,7 @@
+import os
+import uuid
+import boto3
+import requests
 from django.db.models import Avg, Q
 from django.db.models.functions import Upper
 from django.shortcuts import render, redirect, get_object_or_404
@@ -5,7 +9,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import Event, Collide, Rsvp, User, RATES, Rating
+from .models import Event, Collide, Rsvp, User, Rating
 from .forms import CustomSignupForm, RsvpForm, RatingForm
 from datetime import date
 
@@ -56,11 +60,23 @@ def events_detail(request, event_id):
 
 class EventCreate(LoginRequiredMixin, CreateView):
     model = Event
-    fields = ['title', 'date', 'category', 'description', 'details']
+    fields = ['title', 'date', 'category', 'description', 'details', 'photo']
     success_url = '/events'
     
     def form_valid(self, form):
         form.instance.creator = self.request.user
+        photo_file = requests.FILES.get('photo-file', None)
+        if photo_file:
+            s3 = boto3.client('s3')
+            key = uuid.uuid4().hex[:6] + photo_file.name[photo_file.name.rfind('.'):]
+            try:
+                bucket = os.environ['S3_BUCKET']
+                s3.upload_fileobj(photo_file, bucket, key)
+                url = f"{os.environ['S3_BASE_URL']}{bucket}/{key}"
+                Event.photo.create(url=url)
+            except Exception as e:
+                print('An error occurred uploadinng file to S3')
+                print(e)
         return super().form_valid(form)
     
     
