@@ -1,7 +1,13 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h1 class="center">UPCOMING EVENTS</h1>
+<h1 class="center">EVENTS</h1>
+
+<a href="{% url 'events_index' %}" style="color: #daad86;">ALL</a>
+{% for category in distinct_cat %}
+&nbsp;&nbsp;|&nbsp;&nbsp;
+<a href="{% url 'events_index' %}?filter={{ category.0 }}" style="color: #daad86;">{{ category.0 }}</a>
+{% endfor %}
 
 {% for event in events %}
 <div class="row">

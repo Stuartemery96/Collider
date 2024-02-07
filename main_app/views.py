@@ -1,4 +1,5 @@
 from django.db.models import Avg, Q
+from django.db.models.functions import Upper
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth import login
@@ -14,8 +15,14 @@ def home(request):
 
 @login_required
 def events_index(request):
-    events = Event.objects.all()
-    return render(request, 'events/index.html', { 'events': events })
+    filter = request.GET.get('filter')
+    if filter:
+        events = Event.objects.filter(category=filter)
+    else:
+        events = Event.objects.all()
+    distinct_cat = Event.objects.order_by('category').distinct('category').values_list(Upper('category'))
+    print(distinct_cat)
+    return render(request, 'events/index.html', { 'events': events, 'distinct_cat': distinct_cat, 'filter': filter })
 
 
 @login_required
