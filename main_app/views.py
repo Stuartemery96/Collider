@@ -10,7 +10,7 @@ from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Event, Collide, Rsvp, User, Rating
-from .forms import CustomSignupForm, RsvpForm, RatingForm
+from .forms import CustomSignupForm, RsvpForm, RatingForm, EventForm
 from datetime import date
 
 # Create your views here.
@@ -58,26 +58,32 @@ def events_detail(request, event_id):
     return render(request, 'events/detail.html', { 'event': event, 'collides': collides, 'hosts': hosts })
 
 
-class EventCreate(LoginRequiredMixin, CreateView):
-    model = Event
-    fields = ['title', 'date', 'category', 'description', 'details', 'photo']
-    success_url = '/events'
+@login_required
+def events_create(request):
     
-    def form_valid(self, form):
-        form.instance.creator = self.request.user
-        photo_file = requests.FILES.get('photo-file', None)
-        if photo_file:
-            s3 = boto3.client('s3')
-            key = uuid.uuid4().hex[:6] + photo_file.name[photo_file.name.rfind('.'):]
-            try:
-                bucket = os.environ['S3_BUCKET']
-                s3.upload_fileobj(photo_file, bucket, key)
-                url = f"{os.environ['S3_BASE_URL']}{bucket}/{key}"
-                Event.photo.create(url=url)
-            except Exception as e:
-                print('An error occurred uploadinng file to S3')
-                print(e)
-        return super().form_valid(form)
+    if request.method == 'POST':
+        # form.instance.creator = self.request.user
+        form = EventForm(request.POST)
+        if form.is_valid():
+            new_event = form.save(commit=False)
+            new_event.creator = request.user
+            
+            photo_file = request.FILES.get('photo-file', None)
+            if photo_file:
+                s3 = boto3.client('s3')
+                key = uuid.uuid4().hex[:6] + photo_file.name[photo_file.name.rfind('.'):]
+                try:
+                    bucket = os.environ['S3_BUCKET']
+                    s3.upload_fileobj(photo_file, bucket, key)
+                    url = f"{os.environ['S3_BASE_URL']}{bucket}/{key}"
+                    new_event.photo = url
+                except Exception as e:
+                    print('An error occurred uploadinng file to S3')
+                    print(e)
+            new_event.save()
+            return redirect('events_index')
+    event_form = EventForm()
+    return render(request, 'main_app/event_form.html', { 'event_form': event_form })
     
     
 class EventUpdate(LoginRequiredMixin, UpdateView):

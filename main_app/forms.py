@@ -7,7 +7,7 @@ from django.db.models.base import Model
 from django.forms.utils import ErrorList
 from django.shortcuts import get_object_or_404
 from django.forms import EmailField, CharField, ModelForm
-from .models import Rsvp, Collide, Rating
+from .models import Rsvp, Collide, Rating, Event
 
 
 class CustomSignupForm(UserCreationForm):
@@ -44,3 +44,9 @@ class RatingForm(ModelForm):
   class Meta: 
     model = Rating
     fields = ['rating']
+    
+    
+class EventForm(ModelForm):
+  class Meta:
+    model = Event
+    fields = ['title', 'date', 'category', 'description', 'details']
