@@ -3,7 +3,14 @@
 
 <h1 class="center">EVENTS</h1>
 
-
+<div>
+  <form action="" method="GET">
+    {% csrf_token %}
+    <input type="search" name="search" id="searchbar" value="{{ search }}">
+    <button type="submit">Search</button>
+  </form>
+</div>
+<br>
 <div>
   <div class="left">
     <a href="{% url 'events_index' %}" class="{% if filter_category == None %}active{% else %}inactive{% endif %}" id="filters">ALL</a>
@@ -15,6 +22,8 @@
     {% endfor %}
   </div>
   <div class="right">
+    <a href="{% url 'events_index' %}" class="{% if date_filter == None %}active{% else %}inactive{% endif %}">ALL</a>
+    &nbsp;&nbsp;|&nbsp;&nbsp;
     <a href="{% if filter_category %}{% url 'events_index' %}?filter={{ filter_category }}&date_filter=past
     {% else %}{% url 'events_index' %}?date_filter=past{% endif %}" class="{% if date_filter == 'past' %}active
     {% else %}inactive{% endif %}" id="filters">PAST EVENTS</a>&nbsp;&nbsp;|&nbsp;&nbsp;
