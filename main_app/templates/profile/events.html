@@ -6,10 +6,13 @@
 <hr><br>
 {% for event in events %}
 <div class="row">
-  <div class="center col s7">
+  <div class="center col s8 offset-s2">
     <a href="{% url 'events_detail' event.id %}" id="evt-link">
       <div class="card">
         <div class="card-content">
+          <p>
+            <img src="{{ event.photo }}" alt="Event Photo" class="event-img">
+          </p>
           <p class="top left">
             {{ event.date }}
           </p>
@@ -22,9 +25,9 @@
           <p>
             {{ event.description }}
           </p><br>
-          <a href="{% url 'events_update' event.id %}" class="edit-link">
-            <p>EDIT</p>
-          </a>
+            <a href="{% url 'events_update' event.id %}" class="edit-link">
+              <p>EDIT</p>
+            </a>
         </div>
       </div>
     </a>

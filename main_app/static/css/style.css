@@ -80,9 +80,11 @@ button.submit-link:focus {
 
 .card {
   background-color: transparent;
+  border: 3px solid #bc986A;
+}
+
+.card:hover {
   border-color: #fbeec1;
-  border-width: thin;
-  border-style: solid;
 }
 
 #evt-link {

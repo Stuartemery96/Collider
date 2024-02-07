@@ -4,16 +4,16 @@
 
 {% if object %}
 <h1>Edit <span class="teal-text">
-    {{ object.title }}</span></h1>
+{{ object.title }}</span></h1>
 {% else %}
 <h1>Add Event</h1>
 {% endif %}
 
-
 <form action="" method="POST" enctype="multipart/form-data">
   {% csrf_token %}
   <table>
-    {{ event_form.as_table }}
+    {{ form.as_table }}
+    {% if not object %}
     <tr>
       <th>
         <label for="photo-file">Photo</label>
@@ -22,6 +22,7 @@
         <input type="file" name="photo-file" id="photo-file">
       </td>
     </tr>
+    {% endif %}
   </table><br>
   <input type="submit" value="Submit!" class="btn" style="background-color: #daad86;">
 </form>
