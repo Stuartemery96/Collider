@@ -155,3 +155,7 @@ table > tbody > tr > th > label {
   height: 100%;
   justify-self: center;
 }
+
+.event-img {
+  max-width: 100%;
+}
