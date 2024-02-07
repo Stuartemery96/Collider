@@ -108,6 +108,11 @@ button.submit-link:focus {
 a.inactive {
   color: #daad86;
   font-size: 1.25vmax;
+
+}
+
+a.inactive:hover {
+  color: white;
 }
 
 a.active {
@@ -123,4 +128,9 @@ a.active {
 
 table > tbody > tr > th > label {
   color: #fbeec1;
+}
+
+.card-content:hover {
+  background-color: #bc986A;
+  color: white;
 }
