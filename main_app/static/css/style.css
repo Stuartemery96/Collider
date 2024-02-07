@@ -136,8 +136,22 @@ table > tbody > tr > th > label {
 }
 
 #searchbar {
-  font-size: 12px;
+  font-size: 1.25vmax;
   padding: 2px;
   border-radius: 5px;
-  background-color: white;
+  border: 2px solid #daad86;
+  width: 45vmax;
+  height: 1.75vmax;
+  text-transform: uppercase;
+}
+
+#search-btn {
+  font-size: 1.5vmax;
+  background-color: #bc986A;
+  border-color: #daad86;
+  color: #fbeec1;
+  border-radius: 5px;
+  width: 8vmax;
+  height: 100%;
+  justify-self: center;
 }
