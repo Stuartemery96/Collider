@@ -16,16 +16,23 @@ def home(request):
 
 @login_required
 def events_index(request):
-    filter = request.GET.get('filter')
-    if filter:
-        events = Event.objects.filter(category=filter)
-    else:
-        events = Event.objects.all()
-    date_filter = Event.objects.filter(date=date.today())
+    filter_category = request.GET.get('filter')
     today = date.today()
+    date_filter = request.GET.get('date_filter', 'upcoming')
+    events = Event.objects.all()
+    
+    if filter_category:
+        events = events.filter(category=filter_category)
+    
+    if date_filter:
+        if date_filter == 'past':
+            events = events.filter(date__lt=today)
+        elif date_filter == 'upcoming':
+            events = events.filter(date__gte=today)
+    
+        
     distinct_cat = Event.objects.order_by('category').distinct('category').values_list(Upper('category'))
-    print(distinct_cat)
-    return render(request, 'events/index.html', { 'events': events, 'distinct_cat': distinct_cat, 'filter': filter, 'date_filter': date_filter })
+    return render(request, 'events/index.html', { 'events': events, 'distinct_cat': distinct_cat, 'filter_category': filter_category, 'date_filter': date_filter })
 
 
 @login_required

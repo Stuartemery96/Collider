@@ -3,13 +3,25 @@
 
 <h1 class="center">EVENTS</h1>
 
-<a href="{% url 'events_index' %}" style="color: #daad86;" class="{% if None == filter %}active{% endif %}">ALL</a>
-{% for category in distinct_cat %}
-&nbsp;&nbsp;|&nbsp;&nbsp;
-<a href="{% url 'events_index' %}?filter={{ category.0 }}" style="color: #daad86;" class="{% if category.0 == filter %}active{% endif %}">
-  {{ category.0 }}
-</a>
-{% endfor %}
+<div>
+  <div class="left">
+    <a href="{% url 'events_index' %}" class="{% if filter_category == None %}active{% else %}inactive{% endif %}" id="filters">ALL</a>
+    {% for category in distinct_cat %}
+    &nbsp;&nbsp;|&nbsp;&nbsp;
+    <a href="{% url 'events_index' %}?filter={{ category.0 }}&date_filter={{ date_filter }}" class="{% if category.0 == filter_category %}active{% else %}inactive{% endif %}" id="filters">
+      {{ category.0 }}
+    </a>
+    {% endfor %}
+  </div>
+  <div class="right">
+    <a href="{% if filter_category %}{% url 'events_index' %}?filter={{ filter_category }}&date_filter=past
+    {% else %}{% url 'events_index' %}?date_filter=past{% endif %}" class="{% if date_filter == 'past' %}active
+    {% else %}inactive{% endif %}" id="filters">PAST EVENTS</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+    <a href="{% if filter_category %}{% url 'events_index' %}?filter={{ filter_category }}&date_filter=upcoming
+    {% else %}{% url 'events_index' %}?date_filter=upcoming{% endif %}" class="{% if date_filter == 'upcoming' %}active
+    {% else %}inactive{% endif %}" id="filters">UPCOMING EVENTS</a>
+  </div>
+</div>
 
 {% for event in events %}
 <div class="row">
