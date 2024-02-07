@@ -1,8 +1,10 @@
+from django import template 
 from django.db import models
 from django.urls import reverse
 from django.contrib.auth.models import User
 from datetime import date, time
 
+register = template.Library()
 
 RATES = (
   (1, '⭐️'),
@@ -28,6 +30,13 @@ class Event(models.Model):
   
   def __str__(self):
     return f'{self.title}'
+  
+  class Meta:
+    ordering = ['date']
+
+  @register.filter
+  def in_category(events, category):
+    return events.filter(category=category)
   
   def get_absolute_url(self):
     return reverse('events_detail', kwargs={'event_id': self.id})
