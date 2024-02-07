@@ -82,14 +82,15 @@ def events_create(request):
                     print(e)
             new_event.save()
             return redirect('events_index')
-    event_form = EventForm()
-    return render(request, 'main_app/event_form.html', { 'event_form': event_form })
+    form = EventForm()
+    return render(request, 'main_app/event_form.html', { 'form': form })
     
     
 class EventUpdate(LoginRequiredMixin, UpdateView):
     model = Event
     fields = ['title', 'date', 'category', 'description', 'details']
     success_url = '/profile/events'
+    template_name = 'main_app/event_form.html'
     
     def dispatch(self, request, *args, **kwargs):
         event = self.get_object()
@@ -97,7 +98,7 @@ class EventUpdate(LoginRequiredMixin, UpdateView):
             return redirect('events_index')
         return super().dispatch(request, *args, **kwargs)
     
-    
+
 class CollideCreate(LoginRequiredMixin, CreateView):
     model = Collide
     fields = ['location', 'time', 'details']
