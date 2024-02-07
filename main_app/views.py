@@ -32,7 +32,7 @@ def events_index(request):
             events = events.filter(date__gte=today)
     
     if search:
-        events = Event.objects.filter(title=search)
+        events = Event.objects.filter(title__icontains=search)
         
     distinct_cat = Event.objects.order_by('category').distinct('category').values_list(Upper('category'))
     return render(request, 'events/index.html', { 'events': events, 'distinct_cat': distinct_cat, 'filter_category': filter_category, 'date_filter': date_filter, 'search': search })
