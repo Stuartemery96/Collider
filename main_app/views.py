@@ -98,10 +98,6 @@ class EventUpdate(LoginRequiredMixin, UpdateView):
             return redirect('events_index')
         return super().dispatch(request, *args, **kwargs)
     
-def events_update(request, event_id):
-    pass
-
-
 
 class CollideCreate(LoginRequiredMixin, CreateView):
     model = Collide
