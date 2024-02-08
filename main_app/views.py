@@ -23,7 +23,7 @@ def events_index(request):
     filter_category = request.GET.get('filter')
     search = request.GET.get('search')
     today = date.today()
-    date_filter = request.GET.get('date_filter')
+    date_filter = request.GET.get('date_filter', None)
     events = Event.objects.all()
     
     if filter_category:
