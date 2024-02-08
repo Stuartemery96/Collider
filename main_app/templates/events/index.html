@@ -13,7 +13,8 @@
 <br>
 <div>
   <div class="left">
-    <a href="{% url 'events_index' %}" class="{% if filter_category == None %}active{% else %}inactive{% endif %}" id="filters">ALL</a>
+    <a href="{% if date_filter %}{% url 'events_index' %}?date_filter={{ date_filter }}{% else %}
+    {% url 'events_index' %}{% endif %}" class="{% if filter_category == None %}active{% else %}inactive{% endif %}" id="filters">ALL</a>
     {% for category in distinct_cat %}
     &nbsp;&nbsp;|&nbsp;&nbsp;
     <a href="{% url 'events_index' %}?filter={{ category.0 }}&date_filter={{ date_filter }}" class="{% if category.0 == filter_category %}active{% else %}inactive{% endif %}" id="filters">
@@ -22,7 +23,8 @@
     {% endfor %}
   </div>
   <div class="right">
-    <a href="{% url 'events_index' %}" class="{% if date_filter == None %}active{% else %}inactive{% endif %}">ALL</a>
+    <a href="{% if filter_category %}{% url 'events_index' %}?filter={{ filter_category }}&date_filter=all{% else %}
+    {% url 'events_index' %}?date_filter=all{% endif %}" class="{% if date_filter == 'all' %}active{% else %}inactive{% endif %}">ALL</a>
     &nbsp;&nbsp;|&nbsp;&nbsp;
     <a href="{% if filter_category %}{% url 'events_index' %}?filter={{ filter_category }}&date_filter=past
     {% else %}{% url 'events_index' %}?date_filter=past{% endif %}" class="{% if date_filter == 'past' %}active
