@@ -49,4 +49,4 @@ class RatingForm(ModelForm):
 class EventForm(ModelForm):
   class Meta:
     model = Event
-    fields = ['title', 'date', 'category', 'description', 'details']
+    fields = ['title', 'date', 'category', 'description', 'details', 'location']

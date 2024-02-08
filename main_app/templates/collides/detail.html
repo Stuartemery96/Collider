@@ -4,16 +4,16 @@
 <h1 class="center">Collide Details</h1>
 
 <div class="row">
-  <div class="col s8">
+  <div class="col s8 offset-s2">
     <h3>Collide Host:</h3>
     <div class="card">
       <div class="card-content">
         <div class="card-title">
-          <p>
+          <p id="name">
             {{ collide.host.first_name }}
             {{ collide.host.last_name }}
           </p>
-          <p>
+          <p id="rating">
             Rating: <span class="rating-stars" id="host-{{ collide.host.id }}">⭐️⭐️⭐️⭐️⭐️</span>
           </p>
           {% if user.id == collide.host.id or has_rated_host %}
@@ -25,6 +25,26 @@
             <input type="submit" value="RATE" class="btn">
           </form>
           {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<br>
+<div class="row">
+  <div class="col s8 offset-s2">
+    <div class="card">
+      <div class="card-content" id="collide">
+        <div class="card-title">
+          <p id="c-location">
+            {{ collide.location }}
+          </p>
+          <p id="time">
+            {{ collide.time }}
+          </p>
+          <p id="details">
+            {{ collide.details }}
+          </p>
         </div>
       </div>
     </div>
@@ -46,16 +66,17 @@
 {% if rsvps.count %}
 {% for a in attendees %}
 <div class="row">
-  <div class="col s8">
+  <div class="col s8 offset-s2">
     <div class="card">
       <div class="card-content">
         <div class="card-title">
-          <p>
+          <p id="name">
             {{ a.attendee.first_name }}
             {{ a.attendee.last_name }}
           </p>
-          <p>
-            Rating: <span class="rating-stars" id="attendee-{{ a.attendee.id }}">⭐️⭐️⭐️⭐️⭐️</span>
+          <p id="rating">
+            Rating:
+            <span class="rating-stars" id="attendee-{{ a.attendee.id }}">⭐️⭐️⭐️⭐️⭐️</span>
           </p>
           {% if user.id == a.attendee.id or a.has_rated %}
           <p></p>

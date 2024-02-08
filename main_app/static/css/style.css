@@ -11,8 +11,15 @@ main {
   flex: 1 0 auto;
 }
 
+p.left.brand-logo,
+a.left.brand-logo {
+  position: relative;
+  display: inline-flex;
+}
+
 nav a {
   margin-right: 2rem;
+  max-width: 8rem;
 }
 
 nav p {
@@ -72,6 +79,10 @@ button.submit-link:focus {
   color: #fbeec1;
 }
 
+#evt-details {
+  color: #fbeec1;
+}
+
 .edit-link {
   color: white;
   text-decoration: underline;
@@ -83,16 +94,22 @@ button.submit-link:focus {
   border: 3px solid #bc986A;
 }
 
-.card:hover {
+#card:hover {
   border-color: #fbeec1;
 }
 
-#evt-link {
+a.evt-link {
   color: #fbeec1;
 }
 
+#no-collide,
+a.evt-link:hover {
+  color: #daad86;
+}
+
 #create-btn {
-  display: inline-block;
+  display: flexbox;
+  padding: 7px 15px;
   width: 12vmax;
   height: 3vmax;
   background: #B9BEB3;
@@ -132,7 +149,13 @@ table > tbody > tr > th > label {
   color: #fbeec1;
 }
 
-.card-content:hover {
+#card-content {
+  color: #fbeec1;
+}
+
+#button:hover,
+#create-btn:hover,
+#card-content:hover {
   background-color: #bc986A;
   color: white;
 }
@@ -160,4 +183,52 @@ table > tbody > tr > th > label {
 
 .event-img {
   max-width: 100%;
+}
+
+.evt-name {
+  color: #daad86;
+}
+
+.card-title {
+  display: flexbox;
+}
+
+#name,
+#c-location {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+
+#rating,
+#time {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+}
+
+#c-host-rating span,
+#rating span{
+  position: relative;
+  top: 6px;
+}
+
+#collide {
+  text-align: center;
+}
+
+#details {
+  padding-top: 25px;
+}
+
+.info {
+  padding-top: 10px;
+}
+
+input[type="file"] {
+  display: none;
+}
+
+#button {
+  background-color: #daad86;
 }
