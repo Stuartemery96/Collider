@@ -1,5 +1,7 @@
 from django.urls import path
 from . import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('', views.home, name='home'),
@@ -18,3 +20,5 @@ urlpatterns = [
     path('profile/rsvps/', views.user_rsvps, name='user_rsvps'),
     path('accounts/signup/', views.signup, name='signup'),
 ]
+
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
