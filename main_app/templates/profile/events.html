@@ -2,14 +2,14 @@
 {% block content %}
 
 <br>
-<h1 class="center">MY UPCOMING EVENTS</h1>
+<h1 class="center">MY EVENTS</h1>
 <hr><br>
 {% for event in events %}
 <div class="row">
   <div class="center col s8 offset-s2">
-    <a href="{% url 'events_detail' event.id %}" id="evt-link">
-      <div class="card">
-        <div class="card-content">
+    <a href="{% url 'events_detail' event.id %}" id="evt-details">
+      <div class="card" id="card">
+        <div class="card-content" id="card-content">
           <p>
             <img src="{{ event.photo }}" alt="Event Photo" class="event-img">
           </p>
@@ -24,10 +24,10 @@
           </span>
           <p>
             {{ event.description }}
-          </p><br>
-            <a href="{% url 'events_update' event.id %}" class="edit-link">
-              <p>EDIT</p>
-            </a>
+          </p>
+          <a href="{% url 'events_update' event.id %}" class="edit-link">
+            <p>EDIT</p>
+          </a>
         </div>
       </div>
     </a>

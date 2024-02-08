@@ -23,6 +23,7 @@ class Event(models.Model):
   description = models.CharField(max_length=125, help_text='A short description of the event')
   details = models.TextField(max_length=750)
   photo = models.CharField(max_length=250, default='https://i.imgur.com/9h1LE28.png')
+  location = models.CharField(max_length=100, default='', blank=True)
   
   def save(self, *args, **kwargs):
     self.title = self.title.upper()
