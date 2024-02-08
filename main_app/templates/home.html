@@ -1,6 +1,63 @@
-{% extends 'base.html' %}
-{% block content %}
+{% load static %}
 
-<h1>HOME</h1>
+<!DOCTYPE html>
+<html lang="en">
 
-{% endblock %}
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Collider</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display+SC&family=Poiret+One&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</head>
+
+<body id="landing">
+  <header class="navbar-fixed">
+    <nav>
+      <div class="nav-wrapper">
+        <ul>
+          <li><a href="{% url 'home' %}" class="left brand-logo" style="color: #fbeec1;">&nbsp;&nbsp;Collider</a></li>
+        </ul>
+        <ul class="right">
+          {% if user.is_authenticated %}
+          <li><a href="{% url 'user_events' %}" class="nav-btn">Profile</a></li>
+          <li><a href="{% url 'events_index' %}" class="nav-btn">Events</a></li>
+          <li><a href="{% url 'events_create' %}" class="nav-btn">Create Event</a></li>
+          <li>
+            <a href="#" class="nav-btn">
+              <form action="{% url 'logout' %}" method="POST">
+                {% csrf_token %}
+                <button type="submit" class="submit-link">Log Out</button>
+              </form>
+            </a>
+          </li>
+          {% else %}
+          <li><a href="{% url 'signup' %}" class="nav-btn">Sign Up</a></li>
+          <li><a href="{% url 'login' %}" class="nav-btn">Log In</a></li>
+          {% endif %}
+        </ul>
+      </div>
+    </nav>
+  </header>
+  <main class="container">
+    <div class="parent">
+      <div class="child">
+        <h4>COLLIDER</h4>
+        <h1>Walk This Way<br>For Adventures</h1>
+      </div>
+    </div>
+  </main>
+  <footer class="page-footer">
+    <div class="right">All Rights Reserved, &copy; 2024 Collider &nbsp;</div>
+  </footer>
+</body>
+
+</html>
