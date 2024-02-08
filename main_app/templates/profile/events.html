@@ -4,6 +4,7 @@
 <br>
 <h1 class="center">MY EVENTS</h1>
 <hr><br>
+{% if events.count %}
 {% for event in events %}
 <div class="row">
   <div class="center col s8 offset-s2">
@@ -34,6 +35,9 @@
   </div>
 </div>
 {% endfor %}
-
+{% else %}
+<br><br>
+<h4 class="center" id="none">No Events Added</h4>
+{% endif %}
 
 {% endblock %}

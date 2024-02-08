@@ -102,7 +102,7 @@ a.evt-link {
   color: #fbeec1;
 }
 
-#no-collide,
+#none, 
 a.evt-link:hover {
   color: #daad86;
 }
@@ -126,8 +126,7 @@ a.evt-link:hover {
 
 a.inactive {
   color: #daad86;
-  font-size: 1.25vmax;
-
+  font-size: 1rem;
 }
 
 a.inactive:hover {
@@ -142,11 +141,12 @@ a.active {
   text-align: center;
   border-radius: 5px;
   color: #659dbd;
-  font-size: 1.25vmax;
+  font-size: 1rem;
 }
 
 table > tbody > tr > th > label {
   color: #fbeec1;
+  font-size: 1rem;
 }
 
 #card-content {
@@ -161,22 +161,22 @@ table > tbody > tr > th > label {
 }
 
 #searchbar {
-  font-size: 1.25vmax;
+  font-size: 1rem;
   padding: 2px;
   border-radius: 5px;
   border: 2px solid #daad86;
-  width: 45vmax;
+  max-width: 45rem;
   height: 1.75vmax;
   text-transform: uppercase;
 }
 
 #search-btn {
-  font-size: 1.5vmax;
+  font-size: 1rem;
   background-color: #bc986A;
   border-color: #daad86;
   color: #fbeec1;
   border-radius: 5px;
-  width: 8vmax;
+  max-width: 8rem;
   height: 100%;
   justify-self: center;
 }
@@ -232,3 +232,9 @@ input[type="file"] {
 #button {
   background-color: #daad86;
 }
+
+label {
+  color: #fbeec1;
+  font-size: 1rem;
+}
+
