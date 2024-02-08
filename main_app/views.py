@@ -23,7 +23,7 @@ def events_index(request):
     filter_category = request.GET.get('filter')
     search = request.GET.get('search')
     today = date.today()
-    date_filter = request.GET.get('date_filter', None)
+    date_filter = request.GET.get('date_filter', 'upcoming')
     events = Event.objects.all()
     
     if filter_category:
@@ -34,6 +34,8 @@ def events_index(request):
             events = events.filter(date__lt=today)
         elif date_filter == 'upcoming':
             events = events.filter(date__gte=today)
+        elif date_filter == 'all':
+            events = events.all()
     
     if search:
         events = Event.objects.filter(title__icontains=search)
@@ -211,6 +213,3 @@ def signup(request):
     form = CustomSignupForm()
     context = {'form': form, 'error_message': error_message}
     return render(request, 'registration/signup.html', context)
-
-
-
