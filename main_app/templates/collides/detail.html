@@ -54,6 +54,8 @@
 <hr><br>
 {% if has_rsvpd %}
 <p class="right">You have RSVP'd</p>
+{% elif collide.host == request.user %}
+<p></p>
 {% else %}
 <div class="right">
   <form action="{% url 'add_rsvp' collide.id %}" method="POST">
@@ -96,16 +98,18 @@
 {% else %}
 <h4 class="center" id="none">No Attendees Yet</h4>
 {% endif %}
+
+
 <script>
   const selectEls = document.querySelectorAll('select');
   M.FormSelect.init(selectEls);
 
   let hostRatingEl = document.getElementById('host-{{collide.host.id}}');
-  hostRatingEl.style.width = `${24 * {{ host_rating }}}` + 'px';
+  hostRatingEl.style.width = `${25 * {{ host_rating }}}` + 'px';
   let ratingEl;
   {% for a in attendees %}
   ratingEl = document.getElementById('attendee-{{a.attendee.id}}');
-  ratingEl.style.width = `${24 * {{ a.avg_rating.rating__avg }}}` + 'px';
+  ratingEl.style.width = `${25 * {{ a.avg_rating.rating__avg }}}` + 'px';
   {% endfor %}
 </script>
 {% endblock %}

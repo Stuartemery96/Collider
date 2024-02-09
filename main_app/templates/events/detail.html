@@ -68,7 +68,7 @@
 <script>
   {% for host in hosts %}
   hostRatingEl = document.getElementById('host-{{host.host.id}}');
-  hostRatingEl.style.width = `${24 * {{ host.host_rating }}}` + 'px';
+  hostRatingEl.style.width = `${25 * {{ host.host_rating }}}` + 'px';
   {% endfor %}
 </script>
 
