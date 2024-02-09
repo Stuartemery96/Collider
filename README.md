@@ -42,6 +42,8 @@ Collider is a community based program built to allow our users the ability to or
 
 [View Project Planning](https://trello.com/b/i9xi9mkP/collider)
 
+[View Our Pitch Deck](https://docs.google.com/presentation/d/18QIFjo3tssKQ22pd60C4RKlN5Q-qpRbNTHH-xuhP_3s/edit?usp=sharing)
+
 [Explore Collider!](https://collider-2024-1647aaf902b7.herokuapp.com/)
 
 # ⏭️ Next Steps
